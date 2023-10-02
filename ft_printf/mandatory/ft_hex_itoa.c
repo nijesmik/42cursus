@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_itoa.c                                          :+:      :+:    :+:   */
+/*   ft_hex_itoa.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sejinkim <sejinkim@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/14 09:04:28 by sejinkim          #+#    #+#             */
-/*   Updated: 2023/03/17 13:38:57 by sejinkim         ###   ########.fr       */
+/*   Created: 2023/03/16 13:21:39 by sejinkim          #+#    #+#             */
+/*   Updated: 2023/03/17 16:04:44 by sejinkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,13 @@ static size_t	get_len(long long nb)
 	}
 	while (nb > 0)
 	{
-		nb /= 10;
+		nb /= 16;
 		len++;
 	}
 	return (len);
 }
 
-char	*make_itoa_str(long long num, size_t len)
+char	*make_hex_str(long long num, size_t len, int uppercase)
 {
 	char	*str;
 
@@ -52,28 +52,21 @@ char	*make_itoa_str(long long num, size_t len)
 	}
 	while (num > 0)
 	{
-		str[--len] = num % 10 + '0';
-		num /= 10;
+		if (uppercase)
+			str[--len] = HEX_UPPERCASE[num % 16];
+		else
+			str[--len] = HEX_LOWERCASE[num % 16];
+		num /= 16;
 	}
 	return (str);
 }
 
-char	*ft_itoa(int nb)
+char	*ft_hex_itoa(unsigned int nb, int uppercase)
 {
 	long long	num;
 	size_t		len;
 
 	num = (long long) nb;
 	len = get_len(num);
-	return (make_itoa_str(num, len));
-}
-
-char	*ft_unsigned_itoa(unsigned int nb)
-{
-	long long	num;
-	size_t		len;
-
-	num = (long long) nb;
-	len = get_len(num);
-	return (make_itoa_str(num, len));
+	return (make_hex_str(num, len, uppercase));
 }

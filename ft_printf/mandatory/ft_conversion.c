@@ -12,80 +12,67 @@
 
 #include "ft_printf.h"
 
-t_flags	*flag_init(void)
+int	ft_conversion3(const char *str, va_list *ap)
 {
-	t_flags	*flags;
+	unsigned int	u;
+	void			*p;
 
-	flags = (t_flags *)malloc(sizeof(t_flags));
-	if (!flags)
-		return (NULL);
-	flags->err = 0;
-	flags->width = 0;
-	flags->precision = -1;
-	flags->len = 0;
-	flags->ret = 0;
-	flags->zero = 0;
-	flags->negative = 0;
-	flags->minus = 0;
-	flags->hex = 0;
-	flags->plus = 0;
-	flags->space = 0;
-	return (flags);
-}
-
-int	check_flags(char c)
-{
-	return (c == '0' || c == '-' || c == '#' || c == '+' || c == ' ');
-}
-
-void	flag_on(char c, t_flags **flags)
-{
-	if (c == '0' && (*flags)->minus == 0)
-		(*flags)->zero = 1;
-	if (c == '-')
+	if (*str == 'u')
 	{
-		(*flags)->minus = 1;
-		(*flags)->zero = 0;
+		u = va_arg(*ap, unsigned int);
+		return (ft_putstr_and_free(ft_unsigned_itoa(u)));
 	}
-	if (c == '.')
+	else if (*str == 'x' || *str == 'X')
 	{
-		(*flags)->zero = 0;
-		(*flags)->precision = 0;
+		u = va_arg(*ap, unsigned int);
+		if (*str == 'x')
+			return (ft_putstr_and_free(ft_hex_itoa(u, LOWERCASE)));
+		else
+			return (ft_putstr_and_free(ft_hex_itoa(u, UPPERCASE)));
 	}
-	if (c == '#')
-		(*flags)->hex = 2;
-	if (c == '+')
-		(*flags)->plus = 1;
-	if (c == ' ')
-		(*flags)->space = 1;
-}
-
-int	free_flags(t_flags *flags)
-{
-	free(flags);
+	else if (*str == 'p')
+	{
+		p = va_arg(*ap, void *);
+		return (ft_putstr_and_free(addr_to_str((unsigned long)p)));
+	}
 	return (0);
 }
 
-int	ft_conversion(const char **str, va_list *ap)
+int	ft_conversion2(const char *str, va_list *ap)
 {
-	int		len;
-	t_flags	*flags;
+	char	*s;
+	int		d;
 
-	flags = flag_init();
-	if (!flags)
-		return (PRINT_ERR);
-	while (check_flags(**str))
-		flag_on(*((*str)++), &flags);
-	while ('0' <= **str && **str <= '9')
-		flags->width = flags->width * 10 + *((*str)++) - '0';
-	if (**str == '.')
-		flag_on(*((*str)++), &flags);
-	while ('0' <= **str && **str <= '9')
-		flags->precision = flags->precision * 10 + *((*str)++) - '0';
-	len = ft_specifier(**str, ap, flags);
-	if (**str)
-		(*str)++;
-	if (flags->err || len < 0)
-		return (PRINT_ERR + free_flags(flags));
-	return (len + free_flags(flags));
+	if (*str == 's')
+	{
+		s = va_arg(*ap, char *);
+		return (ft_putstr(s));
+	}
+	else if (*str == 'd' || *str == 'i')
+	{
+		d = va_arg(*ap, int);
+		return (ft_putstr_and_free(ft_itoa(d)));
+	}
+	return (0);
+}
+
+int	ft_conversion(const char *str, va_list *ap)
+{
+	char	c;
+
+	if (*str == '%')
+		return (ft_putchr('%'));
+	else if (*str == 'c')
+	{
+		c = va_arg(*ap, int);
+		return (ft_putchr(c));
+	}
+	else if (*str == 's' || *str == 'd' || *str == 'i')
+		return (ft_conversion2(str, ap));
+	else if (*str == 'x' || *str == 'X' || *str == 'u' || *str == 'p')
+		return (ft_conversion3(str, ap));
+	else if (!str)
+		return (0);
+	else
+		return (ft_putchr(*str));
 }
