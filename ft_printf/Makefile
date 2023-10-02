@@ -6,7 +6,7 @@
 #    By: sejinkim <sejinkim@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/29 11:07:07 by sejinkim          #+#    #+#              #
-#    Updated: 2023/10/02 16:17:48 by sejinkim         ###   ########.fr        #
+#    Updated: 2023/10/02 17:19:37 by sejinkim         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,8 @@ OBJS_BONUS = $(SRCS_BONUS:.c=.o)
 SRCS_DIR = ./mandatory/
 SRCS = \
 	$(SRCS_DIR)ft_conversion.c \
-	$(SRCS_DIR)ft_hex_itoa.c \
 	$(SRCS_DIR)ft_itoa.c \
 	$(SRCS_DIR)ft_printf.c \
-	$(SRCS_DIR)ft_putchr.c \
 	$(SRCS_DIR)ft_putstr.c
 OBJS = $(SRCS:.c=.o)
 
