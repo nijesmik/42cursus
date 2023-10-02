@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejinkim <sejinkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sejinkim <sejinkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:57:29 by sejinkim          #+#    #+#             */
-/*   Updated: 2023/03/24 10:33:57 by sejinkim         ###   ########.fr       */
+/*   Updated: 2023/10/02 15:03:26 by sejinkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,9 @@
 # endif
 
 char	*get_next_line(int fd);
-int		get_len(char *buff);
-void	move_to_save(char *save, char *buff, int len);
-size_t	ft_strlcpy(char *dest, const char *src, size_t size);
-char	*ft_strjoin(char *s1, char *s2, char *save);
+size_t	get_len(char *str);
+void	_strlcpy(char *dest, const char *src, size_t size);
+char	*_strjoin(char *str, char *buff, char *save, size_t len2);
 char	*ft_free(char *str);
 
 #endif
