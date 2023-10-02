@@ -60,7 +60,7 @@ char	*ft_strjoin(char *str, char *buff, t_list *node)
 	ft_strlcpy(ret, str, len1 + 1);
 	ft_strlcpy(ret + len1, buff, len2 + 1);
 	free(str);
-	move_to_save(node, buff, len2);
+	ft_strlcpy(node->save, buff + len2, BUFFER_SIZE + 1 - len2);
 	return (ret);
 }
 

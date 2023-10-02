@@ -12,19 +12,6 @@
 
 #include "get_next_line_bonus.h"
 
-void	move_to_save(t_list *node, char *buff, int idx)
-{
-	int	i;
-
-	i = 0;
-	while (buff[idx + i])
-	{
-		node->save[i] = buff[idx + i];
-		i++;
-	}
-	node->save[i] = 0;
-}
-
 char	*duplicate_save(t_list *node)
 {
 	int		len;
@@ -35,7 +22,7 @@ char	*duplicate_save(t_list *node)
 	if (!str)
 		return (NULL);
 	ft_strlcpy(str, node->save, len + 1);
-	move_to_save(node, node->save, len);
+	ft_strlcpy(node->save, node->save + len, BUFFER_SIZE + 1 - len);
 	return (str);
 }
 

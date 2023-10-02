@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_bonus.h                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sejinkim <sejinkim@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sejinkim <sejinkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 17:57:29 by sejinkim          #+#    #+#             */
-/*   Updated: 2023/03/24 09:31:06 by sejinkim         ###   ########.fr       */
+/*   Updated: 2023/10/02 14:41:38 by sejinkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ typedef struct s_list
 
 char	*get_next_line(int fd);
 int		get_len(char *buff);
-void	move_to_save(t_list *node, char *buff, int idx);
 size_t	ft_strlcpy(char *dest, const char *src, size_t size);
 char	*ft_strjoin(char *str, char *buff, t_list *node);
 t_list	*find_fd_node(t_list **list, int fd);
