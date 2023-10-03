@@ -6,61 +6,38 @@
 /*   By: sejinkim <sejinkim@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/18 15:43:17 by sejinkim          #+#    #+#             */
-/*   Updated: 2023/10/02 15:08:14 by sejinkim         ###   ########.fr       */
+/*   Updated: 2023/10/03 12:05:46 by sejinkim         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*duplicate_save(char *save, size_t len)
+char	*read_end(char *str, ssize_t read_size)
 {
-	char	*str;
-
-	str = (char *)malloc(sizeof(char) * (len + 1));
-	if (!str)
-		return (NULL);
-	if (!len)
-	{
-		str[0] = 0;
-		return (str);
-	}
-	_strlcpy(str, save, len + 1);
-	_strlcpy(save, save + len, BUFFER_SIZE + 1 - len);
-	return (str);
-}
-
-char	*read_end(char *buff, char *str, ssize_t read_size)
-{
-	free(buff);
 	if (read_size < 0 || !*str)
 		return (ft_free(str));
 	else
 		return (str);
 }
 
-char	*make_str(int fd, char *str, char *save)
+char	*make_str(int fd, char *str, char *save, size_t savelen)
 {
-	char	*buff;
 	ssize_t	read_size;
-	size_t	len;
+	size_t	strlen;
 
-	buff = (char *)malloc(sizeof(char) * (BUFFER_SIZE + 1));
-	if (!buff)
-		return (ft_free(str));
-	len = 1;
-	buff[len - 1] = 0;
-	while (buff[len - 1] != '\n')
+	strlen = savelen;
+	while (!*str || str[strlen - 1] != '\n')
 	{
-		read_size = read(fd, buff, BUFFER_SIZE);
+		read_size = read(fd, save, BUFFER_SIZE);
 		if (read_size <= 0)
-			return (read_end(buff, str, read_size));
-		buff[read_size] = 0;
-		len = get_len(buff);
-		str = _strjoin(str, buff, save, len);
+			return (read_end(str, read_size));
+		save[read_size] = 0;
+		savelen = get_len(save);
+		str = _strjoin(str, save, strlen, savelen);
 		if (!str)
-			return (ft_free(buff));
+			return (NULL);
+		strlen += savelen;
 	}
-	free(buff);
 	return (str);
 }
 
@@ -73,12 +50,10 @@ char	*get_next_line(int fd)
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	len = get_len(save);
-	str = duplicate_save(save, len);
+	str = _strjoin(NULL, save, 0, len);
 	if (!str)
 		return (NULL);
-	if (len > 0 && str[len - 1] == '\n')
-		return (str);
-	return (make_str(fd, str, save));
+	return (make_str(fd, str, save, len));
 }
 /*
 #include <stdio.h>
