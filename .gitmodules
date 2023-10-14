@@ -1,3 +1,6 @@
 [submodule "FdF"]
 	path = FdF
 	url = https://github.com/nijesmik/FdF.git
+[submodule "Philosophers"]
+	path = Philosophers
+	url = https://github.com/nijesmik/Philosophers.git
