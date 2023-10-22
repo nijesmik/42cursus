@@ -4,3 +4,6 @@
 [submodule "Philosophers"]
 	path = Philosophers
 	url = https://github.com/nijesmik/Philosophers.git
+[submodule "minishell"]
+	path = minishell
+	url = https://github.com/nijesmik/minishell.git
