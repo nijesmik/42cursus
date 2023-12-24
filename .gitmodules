@@ -7,3 +7,6 @@
 [submodule "minishell"]
 	path = minishell
 	url = https://github.com/nijesmik/minishell.git
+[submodule "miniRT"]
+	path = miniRT
+	url = https://github.com/nijesmik/miniRT.git
